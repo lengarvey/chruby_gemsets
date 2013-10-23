@@ -7,8 +7,8 @@ although there shouldn't be a reason this would work with any ruby version tool 
 ## Installation
 
     git clone https://github.com/lengarvey/chruby_gemsets.git
-    echo "source $PWD/chruby_gemsets/auto.sh" > ~/.zshenv
-    source $PWD/chruby_gemsets/auto.sh
+    echo "source '`pwd`/chruby_gemsets/auto.sh'" >> ~/.zshenv
+    source "'`pwd`/chruby_gemsets/auto.sh'"
 
 ## Creating a gemset
 
