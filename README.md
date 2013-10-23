@@ -2,7 +2,7 @@
 
 Gemsets for [chruby](https://github.com/postmodern/chruby)
 
-although there shouldn't be a reason this would work with any ruby version tool (RVM, rbenv etc)
+although there shouldn't be a reason this wouldn't work with any ruby version tool (RVM, rbenv etc)
 
 ## Installation
 
