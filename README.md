@@ -10,9 +10,14 @@ although there shouldn't be a reason this would work with any ruby version tool 
     echo "source $PWD/chruby_gemsets/auto.sh" > ~/.zshenv
     source $PWD/chruby_gemsets/auto.sh
 
-## Create a gemset
+## Creating a gemset
 
 Just put the name of the gemset inside a `.chruby-gemset` file somewhere in your project tree.
+So something like:
+
+    echo my-new-gemset > .chruby-gemset
+
+You can check that this works by running either `gem env` or `gem list` to see that you've got a fresh gemset.
 
 ## Tips for dealing with git
 
@@ -22,14 +27,18 @@ If you want to hide the fact you're using a particular gemset:
 
 This adds your `.chruby-gemset` file to a local only .gitignore.
 
-# License
+# Boring stuff
+
+## License
 
 MIT. Do whatever you want with this
 
-# Credits
+## Credits
 
 Based on auto.sh from chruby
 
-# Known Issues
+## Known Issues
 
-Only works with zsh. Should be easy to make it work with bash, but I don't have time to test it just yet :(
+* Only works with zsh. Should be easy to make it work with bash, but I don't have time to test it just yet :(
+* Almost entirely untested. Use at own risk.
+
