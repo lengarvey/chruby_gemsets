@@ -1,17 +1,16 @@
-# Save existing environment setup
-if [ -z "$DEFAULT_GEM_HOME" ]; then
-  export DEFAULT_GEM_HOME=$GEM_HOME
-fi
-
-if [ -z "$DEFAULT_GEM_PATH" ]; then
-  export DEFAULT_GEM_PATH=$GEM_PATH
-fi
-
-if [ -z "$DEFAULT_PATH" ]; then
-  export DEFAULT_PATH=$PATH
-fi
-
 function chruby_gemset() {
+  # Save existing environment setup
+  if [ -z "$DEFAULT_GEM_HOME" ]; then
+    export DEFAULT_GEM_HOME=$GEM_HOME
+  fi
+
+  if [ -z "$DEFAULT_GEM_PATH" ]; then
+    export DEFAULT_GEM_PATH=$GEM_PATH
+  fi
+
+  if [ -z "$DEFAULT_PATH" ]; then
+    export DEFAULT_PATH=$PATH
+  fi
   chruby_gemset=$1
 
   ruby_bin="`command -v unbundled_ruby || command -v ruby`"
@@ -42,7 +41,6 @@ function chruby_gemset_auto() {
 
 	until [[ -z "$dir" ]]; do
 		if { read -r gemset <"$dir/.gemset"; } 2>/dev/null; then
-      CHRUBY_GEMSET="$version"
       chruby_gemset "$gemset"
       return $?
 		fi
@@ -51,8 +49,13 @@ function chruby_gemset_auto() {
 	done
 
 	if [[ -z "$gemset" ]]; then
-    reset_chruby_gemset
-		unset CHRUBY_GEMSET
+    if [ -z "$DEFAULT_GEM_PATH" ]; then
+    else
+      reset_chruby_gemset
+      unset DEFAULT_GEM_PATH
+      unset DEFAULT_GEM_HOME
+      unset DEFAULT_PATH
+    fi
 	fi
 }
 
