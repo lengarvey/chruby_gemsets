@@ -41,7 +41,7 @@ function chruby_gemset_auto() {
 	local gemset
 
 	until [[ -z "$dir" ]]; do
-		if { read -r gemset <"$dir/.chruby-gemset"; } 2>/dev/null; then
+		if { read -r gemset <"$dir/.gemset"; } 2>/dev/null; then
       CHRUBY_GEMSET="$version"
       chruby_gemset "$gemset"
       return $?

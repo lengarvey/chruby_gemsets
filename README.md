@@ -15,7 +15,7 @@ although there shouldn't be a reason this wouldn't work with any ruby version to
 Just put the name of the gemset inside a `.chruby-gemset` file somewhere in your project tree.
 So something like:
 
-    echo my-new-gemset > .chruby-gemset
+    echo my-new-gemset > .gemset
 
 You can check that this works by running either `gem env` or `gem list` to see that you've got a fresh gemset.
 
@@ -23,9 +23,9 @@ You can check that this works by running either `gem env` or `gem list` to see t
 
 If you want to hide the fact you're using a particular gemset:
 
-    echo ".chruby-gemset" > .git/info/exclude
+    echo ".gemset" > .git/info/exclude
 
-This adds your `.chruby-gemset` file to a local only .gitignore.
+This adds your `.gemset` file to a local only .gitignore.
 
 # Boring stuff
 
