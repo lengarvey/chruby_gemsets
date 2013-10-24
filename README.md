@@ -12,7 +12,7 @@ although there shouldn't be a reason this wouldn't work with any ruby version to
 
 ## Creating a gemset
 
-Just put the name of the gemset inside a `.chruby-gemset` file somewhere in your project tree.
+Just put the name of the gemset inside a `.gemset` file somewhere in your project tree.
 So something like:
 
     echo my-new-gemset > .gemset
