@@ -14,7 +14,9 @@ fi
 function chruby_gemset() {
   chruby_gemset=$1
 
-eval `ruby - <<EOF
+  ruby_bin="`command -v unbundled_ruby || command -v ruby`"
+
+eval `$ruby_bin - <<EOF
 require 'rubygems'
 puts "ruby_engine=#{defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'ruby'}"
 puts "ruby_version=#{RUBY_VERSION}"
