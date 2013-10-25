@@ -44,6 +44,10 @@ function chruby_gemset_auto() {
       chruby_gemset "$gemset"
       return $?
 		fi
+		if { read -r gemset <"$dir/.ruby-gemset"; } 2>/dev/null; then
+      chruby_gemset "$gemset"
+      return $?
+		fi
 
 		dir="${dir%/*}"
 	done
