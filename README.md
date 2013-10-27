@@ -19,6 +19,9 @@ So something like:
 
 You can check that this works by running either `gem env` or `gem list` to see that you've got a fresh gemset.
 
+`.ruby-gemset` is also supported. So for those people who are switching from RVM can keep using their project
+specific dotfiles.
+
 ## Tips for dealing with git
 
 If you want to hide the fact you're using a particular gemset:
