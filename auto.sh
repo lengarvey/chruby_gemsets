@@ -1,3 +1,18 @@
+if [[ -z $GEMSET ]]; then
+  # echo "The GEMSET is not set"
+  if [ -z "$DEFAULT_GEM_HOME" ]; then
+    export DEFAULT_GEM_HOME=$GEM_HOME
+  fi
+
+  if [ -z "$DEFAULT_GEM_PATH" ]; then
+    export DEFAULT_GEM_PATH=$GEM_PATH
+  fi
+
+  if [ -z "$DEFAULT_PATH" ]; then
+    export DEFAULT_PATH=$PATH
+  fi
+fi
+
 function chruby_gemset() {
   # Save existing environment setup
   if [ -z "$DEFAULT_GEM_HOME" ]; then
@@ -30,9 +45,12 @@ EOF`
 }
 
 function reset_chruby_gemset() {
-  export PATH=$DEFAULT_PATH
-  export GEM_HOME=$DEFAULT_GEM_HOME
-  export GEM_PATH=$DEFAULT_GEM_PATH
+  if [[ -z "$DEFAULT_PATH" ]]; then
+  else
+    export PATH=$DEFAULT_PATH
+    export GEM_HOME=$DEFAULT_GEM_HOME
+    export GEM_PATH=$DEFAULT_GEM_PATH
+  fi
 }
 
 function chruby_gemset_auto() {
@@ -40,27 +58,36 @@ function chruby_gemset_auto() {
 	local gemset
 
 	until [[ -z "$dir" ]]; do
-		if { read -r gemset <"$dir/.gemset"; } 2>/dev/null; then
-      chruby_gemset "$gemset"
+    # echo "Scanning $dir for gemset"
+    if { read -r gemset <"$dir/.gemset"; } 2>/dev/null; then
+      if [[ -z "$GEMSET" ]]; then
+        # echo "Applying gemset: $gemset"
+        chruby_gemset "$gemset"
+        export GEMSET=$gemset
+      fi
+      # echo "Gemset found: $gemset - GLOBAL gemset is: $GEMSET"
       return $?
-		fi
-		if { read -r gemset <"$dir/.ruby-gemset"; } 2>/dev/null; then
-      chruby_gemset "$gemset"
-      return $?
-		fi
-
-		dir="${dir%/*}"
+    fi
+    if { read -r gemset <"$dir/.ruby-gemset"; } 2>/dev/null; then
+      if [[ -z "$GEMSET" ]]; then
+        chruby_gemset "$gemset"
+        export GEMSET=$gemset
+        return $?
+      fi
+    fi
+    dir="${dir%/*}"
 	done
 
+  # echo "Finished scanning. Gemset is $gemset and GEMSET is $GEMSET"
+
 	if [[ -z "$gemset" ]]; then
-    if [ -z "$DEFAULT_GEM_PATH" ]; then
-    else
-      reset_chruby_gemset
-      unset DEFAULT_GEM_PATH
-      unset DEFAULT_GEM_HOME
-      unset DEFAULT_PATH
-    fi
-	fi
+    # echo "Unsetting your gemset. Default path: $DEFAULT_PATH"
+    unset GEMSET
+    reset_chruby_gemset
+    unset DEFAULT_GEM_PATH
+    unset DEFAULT_GEM_HOME
+    unset DEFAULT_PATH
+  fi
 }
 
 if [[ -n "$ZSH_VERSION" ]]; then
