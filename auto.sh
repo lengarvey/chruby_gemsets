@@ -46,7 +46,6 @@ EOF`
 
 function reset_chruby_gemset() {
   if [[ -z "$DEFAULT_PATH" ]]; then
-  else
     export PATH=$DEFAULT_PATH
     export GEM_HOME=$DEFAULT_GEM_HOME
     export GEM_PATH=$DEFAULT_GEM_PATH
@@ -94,4 +93,6 @@ if [[ -n "$ZSH_VERSION" ]]; then
 	if [[ ! "$preexec_functions" == *chruby_gemset_auto* ]]; then
 		preexec_functions+=("chruby_gemset_auto")
 	fi
+elif [[ -n "$BASH_VERSION" ]]; then
+	chruby_gemset_auto
 fi
